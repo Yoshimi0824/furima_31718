@@ -103,7 +103,8 @@ RSpec.describe User, type: :model do
         @user.first_name_kana = nil
         @user.valid?
         expect(@user.errors.full_messages).to include("First name kana can't be blank")
-
+      end
+      
       it 'ユーザー本名の名字のフリガナは、全角（カタカナ）での入力が必須であること' do
         @user.last_name_kana = 'あ'
         @user.valid?

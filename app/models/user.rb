@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
-  with_options presence: true
+  with_options presence: true do
     validates :nickname
     validates :birthday
   end
@@ -27,8 +27,4 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 end
 
-# パスワードは、半角英数字混合での入力が必須であること
-# メールアドレスは、@を含む必要があること
 
-# ユーザー本名は、全角（漢字・ひらがな・カタカナ）での入力が必須であること
-# ユーザー本名のフリガナは、全角（カタカナ）での入力が必須であること
