@@ -69,32 +69,51 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
 
-      it 'ユーザー本名は、名字と名前がそれぞれ必須であること' do
+      it 'ユーザー本名の名字が必須であること' do
         @user.last_name = nil
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Last name can't be blank")
+      end
+
+      it 'ユーザー本名の名前が必須であること' do
         @user.first_name = nil
         @user.valid?
-        expect(@user.errors.full_messages).to include("Last name can't be blank", "First name can't be blank")
+        expect(@user.errors.full_messages).to include("First name can't be blank")
       end
 
-      it 'ユーザー本名は、全角（漢字・ひらがな・カタカナ）での入力が必須であること' do
+      it 'ユーザー本名の名字は、全角（漢字・ひらがな・カタカナ）での入力が必須であること' do
         @user.last_name = 'Doe'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Last name 全角文字を使用してください')
+      end
+
+      it 'ユーザー本名の名前は、全角（漢字・ひらがな・カタカナ）での入力が必須であること' do
         @user.first_name = 'John'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Last name 全角文字を使用してください', 'First name 全角文字を使用してください')
+        expect(@user.errors.full_messages).to include('First name 全角文字を使用してください')
       end
 
-      it 'ユーザー本名のフリガナは、名字と名前でそれぞれ必須であること' do
+      it 'ユーザー本名の名字のフリガナが必須であること' do
         @user.last_name_kana = nil
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Last name kana can't be blank")
+      end
+
+      it 'ユーザー本名の名前のフリガナが必須であること' do
         @user.first_name_kana = nil
         @user.valid?
-        expect(@user.errors.full_messages).to include("Last name kana can't be blank", "First name kana can't be blank")
+        expect(@user.errors.full_messages).to include("First name kana can't be blank")
+
+      it 'ユーザー本名の名字のフリガナは、全角（カタカナ）での入力が必須であること' do
+        @user.last_name_kana = 'あ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Last name kana 全角カナ文字を使用してください')
       end
 
-      it 'ユーザー本名のフリガナは、全角（カタカナ）での入力が必須であること' do
-        @user.last_name_kana = 'あ'
-        @user.first_name_kana = 'あ'
+      it 'ユーザー本名の名前のフリガナは、全角（カタカナ）での入力が必須であること' do
+        @user.first_name_kana = "あ"
         @user.valid?
-        expect(@user.errors.full_messages).to include('Last name kana 全角カナ文字を使用してください', 'First name kana 全角カナ文字を使用してください')
+        expect(@user.errors.full_messages).to include('First name kana 全角カナ文字を使用してください')
       end
 
       it '生年月日が必須であること' do
