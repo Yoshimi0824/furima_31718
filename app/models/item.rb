@@ -9,9 +9,9 @@ class Item < ApplicationRecord
     validates :image
   end
 
-  validates :price, presence: true, 
+  validates :price, presence: true,
                     format: { with: /\A[0-9]+\z/ },
-                    numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
+                    numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
