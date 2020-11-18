@@ -57,7 +57,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'パスワードが半角英字のみだとユーザー登録できない' do
-        @user.password = "aaaaaa"
+        @user.password = 'aaaaaa'
         @user.valid?
         expect(@user.errors.full_messages).to include('Password には英字と数字の両方を含めて設定してください')
       end
@@ -118,7 +118,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'ユーザー本名の名前のフリガナは、全角（カタカナ）での入力が必須であること' do
-        @user.first_name_kana = "あ"
+        @user.first_name_kana = 'あ'
         @user.valid?
         expect(@user.errors.full_messages).to include('First name kana 全角カナ文字を使用してください')
       end
