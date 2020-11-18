@@ -143,7 +143,7 @@
                 <%= item.product %>
               </h3>
               <div class='item-price'>
-                <span><%= item.price %>円<br><%= @shipping_fee[item.shipping_fee_id - 1][:name] %></span>
+                <span><%= item.price %>円<br><%= item.shipping_fee.name %></span>
                 <div class='star-btn'>
                   <%= image_tag "star.png", class:"star-icon" %>
                   <span class='star-count'>0</span>
@@ -156,7 +156,7 @@
 
       <%# 商品がない場合のダミー %>
       <%# 商品がある場合は表示されないようにしましょう %>
-      <% unless @item %>
+      <% if @item.empty? %>
       <li class='list'>
         <%= link_to '#' do %>
         <%= image_tag "https://s3-ap-northeast-1.amazonaws.com/mercarimaster/uploads/captured_image/content/10/a004.png", class: "item-img" %>
