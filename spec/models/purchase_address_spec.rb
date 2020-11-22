@@ -10,6 +10,10 @@ RSpec.describe PurchaseAddress, type: :model do
       it '全ての項目を記入すると購入できる' do
         expect(@purchase_address).to be_valid
       end
+      it '建物名がなくても購入できる' do
+        @purchase_address.building_name = " "
+        expect(@purchase_address).to be_valid
+      end
     end
 
     context '購入がうまくいかないとき' do
@@ -48,10 +52,15 @@ RSpec.describe PurchaseAddress, type: :model do
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
       end
-      it '電話番号にはハイフンは不要で、11桁以内であること（09012345678となる）' do
-        @purchase_address.phone_number = '090-1234-5678'
+      it '電話番号は11桁以内でないと購入できない' do
+        @purchase_address.phone_number = '090123456789'
         @purchase_address.valid?
-        expect(@purchase_address.errors.full_messages).to include('Phone number is invalid. Except hyphen(-)')
+        expect(@purchase_address.errors.full_messages).to include("Phone number is too long (maximum is 11 characters)")
+      end
+      it '電話番号は数字のみでないと（ハイフンが含まれていると）購入できない' do
+        @purchase_address.phone_number = '090-123-456'
+        @purchase_address.valid?
+        expect(@purchase_address.errors.full_messages).to include("Phone number is invalid. Except hyphen(-)")
       end
     end
   end
